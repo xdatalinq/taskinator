@@ -60,6 +60,8 @@ var createTaskEl = function(taskDataObj) {
 
   // increase task counter for next unique id
   taskIdCounter++;
+
+  saveTasks();
 };
 
 var createTaskActions = function(taskId) {
@@ -115,6 +117,8 @@ var completeEditTask = function(taskName, taskType, taskId) {
     tasks[i].name = taskName;
     tasks[i].type = taskType;
   }
+
+  saveTasks();
 };
 
 var taskButtonHandler = function(event) {
@@ -157,6 +161,7 @@ var taskStatusChangeHandler = function(event) {
       tasks[i].status = statusValue;
     }
   }
+  saveTasks();
 };
 
 var editTask = function(taskId) {
@@ -201,6 +206,7 @@ var deleteTask = function(taskId) {
   }
   // reassign tasks array to be the same as updatedTaskArr
   tasks = updatedTaskArr;
+  saveTasks();
 };
 
 // Create a new task
@@ -208,6 +214,10 @@ formEl.addEventListener("submit", taskFormHandler);
 
 // for edit and delete buttons
 pageContentEl.addEventListener("click", taskButtonHandler);
+
+var saveTasks = function() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
 
 // for changing the status
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
